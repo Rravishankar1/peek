@@ -1,0 +1,47 @@
+// Python compile: python3 -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. peek.proto
+
+syntax = "proto3";
+
+package peek;
+
+service peekService {
+    rpc addUser (userRequest) returns (userResponse);
+    rpc loginUser (userRequest) returns (userResponse);
+    rpc getCachedData (peekRequest) returns (peekResponse);
+    rpc getNewData (peekRequest) returns (peekResponse);
+}
+
+message userRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message userResponse {
+    int32 userID = 1;
+}
+
+/* appId
+0 = Gmail
+1 = Instagram
+*/
+message peekRequest {
+    int32 userID = 1;
+    int32 appID = 2;
+}
+
+message peekResponse {
+    repeated topic topics= 1;
+}
+
+message topic {
+    string name = 1;
+    int32 emoji = 2;
+    string highlight = 3;
+    string summary = 4;
+    repeated notif notifs = 5;
+}
+
+message notif {
+    string title = 1;
+    string uri = 2;
+}
