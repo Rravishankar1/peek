@@ -21,27 +21,31 @@ import compute.fetchers.twitter as twitter
 
 def direct(request, context, cache):
     response = None
-    match request.appID:
-        case peekRequest.GMAIL:
-            print("Directing to Gmail fetcher")
-            response = gmail.fetch(request.userID, request.token1, request.token2, request.token3,)
-        case peekRequest.INSTAGRAM:
-            print("Directing to Instagram fetcher")
-            response = instagram.fetch(request.userID)
-        case peekRequest.DISCORD:
-            print("Directing to Discord fetcher")
-            response = discord.fetch(request.userID)
-        case peekRequest.WHATSAPP:
-            print("Directing to WhatsApp fetcher")
-            response = whatsapp.fetch(request.userID)
-        case peekRequest.MESSENGER:
-            print("Directing to Messenger fetcher")
-            response = messenger.fetch(request.userID)
-        case peekRequest.TWITTER:
-            print("Directing to Twitter fetcher")
-            response = twitter.fetch(request.userID)
-        case _:
-            print("Invalid App")
+
+    if cache:
+        return response
+    else:
+        match request.appID:
+            case peekRequest.GMAIL:
+                print("Directing to Gmail fetcher")
+                response = gmail.fetch(request.userID, request.token1, request.token2, request.token3, request.token4)
+            case peekRequest.INSTAGRAM:
+                print("Directing to Instagram fetcher")
+                response = instagram.fetch(request.userID)
+            case peekRequest.DISCORD:
+                print("Directing to Discord fetcher")
+                response = discord.fetch(request.userID)
+            case peekRequest.WHATSAPP:
+                print("Directing to WhatsApp fetcher")
+                response = whatsapp.fetch(request.userID)
+            case peekRequest.MESSENGER:
+                print("Directing to Messenger fetcher")
+                response = messenger.fetch(request.userID)
+            case peekRequest.TWITTER:
+                print("Directing to Twitter fetcher")
+                response = twitter.fetch(request.userID)
+            case _:
+                print("Invalid App")
 
     if response is None:
         context.abort(grpc.StatusCode.INTERNAL, "Could not fetch data for app")
