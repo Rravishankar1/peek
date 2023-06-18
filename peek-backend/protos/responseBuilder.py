@@ -34,7 +34,7 @@ class responseBuilder:
             topics=[
                 topic(
                     name="testTopic",
-                    emoji=123,
+                    emoji="123",
                     highlight="testHighlight",
                     summary="testSummary",
                     notifs=[
@@ -50,7 +50,7 @@ class responseBuilder:
                 ),
                 topic(
                     name="testTopic2",
-                    emoji=345,
+                    emoji="123",
                     highlight="testHighlight2",
                     summary="testSummary2",
                     notifs=[
