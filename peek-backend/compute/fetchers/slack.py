@@ -1,11 +1,14 @@
-import slack
+import slack as sl
 import os
 from dotenv import load_dotenv
 from compute.ml.openai import organize_topics, summarize
+from protos.responseBuilder import responseBuilder
 
 load_dotenv()
 slack_token = os.getenv("SLACK_API_KEY")
-client = slack.WebClient(token=slack_token)
+print("Setting up Slack client...")
+client = sl.WebClient(token=slack_token)
+print("Slack client setup complete!")
 
 workspace_url = "https://peek-3kq7477.slack.com"
 
@@ -20,27 +23,25 @@ def get_username(user_id):
         return None
 
 def fetch(userID):
-    print("Fetching Discord data for user: " + str(userID))
+    print("Fetching Slack data for user: " + str(userID))
 
     messages = []
     organizeGPTInput = []
 
+    response = responseBuilder()
 
-    response = client.conversations_list()
-    for channel in response['channels']:
+    slackResponse = client.conversations_list()
+    for channel in slackResponse['channels']:
         channelId = channel['id']
         channelName = channel['name']
         print(f'Channel: {channelName}')
-
-        # print(channel)
         
         history = client.conversations_history(channel=channelId, limit=10)
-        messages = history['messages']
-        for i, msg in enumerate(messages, start=1):
+        msgs = history['messages']
+        for i, msg in enumerate(msgs, start=1):
             author = get_username(msg['user'])
             timestamp = msg['ts']
             content = msg["text"]
-
             uri = f"{workspace_url}.slack.com/archives/{channelId}/p{timestamp.replace('.', '')}"
 
             messages.append({
@@ -51,9 +52,11 @@ def fetch(userID):
                 "uri": uri
             })
             organizeGPTInput.append(f"Channel: {channelName} | {author}: {content}")
-        
+    print("Organizing with GPT...")
     responseString = organize_topics(organizeGPTInput, "Slack")
+    print(responseString)
     for topic in responseString:
+        print("Summarizing with GPT...")
         summarizeGPTInput = []
         notifs = []
         for i in responseString[topic]:
@@ -63,6 +66,7 @@ def fetch(userID):
                 "uri": messages[i]["uri"]
             })
         summarized = summarize(summarizeGPTInput, topic, "Discord")
+        print(summarized)
         response.addTopic(
             name=topic,
             highlight=summarized["highlight"],

@@ -26,6 +26,7 @@ class PeekService(peekServiceServicer):
         return switcher.direct(request, context, False)  
 
 def serve():
+    print("Starting server...")
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     add_peekServiceServicer_to_server(
         PeekService(), server

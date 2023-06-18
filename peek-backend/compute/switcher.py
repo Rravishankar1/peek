@@ -5,12 +5,15 @@ from protos.peek_pb2 import (
 
 import os
 from google.cloud import firestore
+from google.protobuf.json_format import MessageToDict
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 relative_path = "../keys/peek-credentials.json"
 KEY_PATH = os.path.join(current_dir, relative_path)
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = KEY_PATH
+print("Setting up Firestore client...")
 db = firestore.Client()
+print("Firestore client setup complete!")
 
 import compute.fetchers.gmail as gmail
 import compute.fetchers.instagram as instagram
@@ -59,8 +62,10 @@ def direct(request, context, cache):
         context.abort(grpc.StatusCode.INTERNAL, "Could not fetch data for app")
         return None
     
-    app = peekRequest.app.Name(request.appID)
-    doc_ref = db.collection(app).document(request.userID)
-    doc_ref.set(response)
+    if not cache:
+        app = peekRequest.app.Name(request.appID)
+        doc_ref = db.collection(app).document(str(request.userID))
+        doc_ref.set(MessageToDict(response))
+        print("Response data cached to Firestore")
 
     return response
