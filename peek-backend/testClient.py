@@ -16,7 +16,7 @@ def testClient():
     stub = peekServiceStub(channel)
 
     # create a valid request message
-    request = peekRequest(userID=123, appID=peekRequest.GMAIL)
+    request = peekRequest(userID=123, appID=peekRequest.DISCORD)
 
     # make the call
     response = stub.getNewData(request)

@@ -29,7 +29,7 @@ class responseBuilder:
     def build(self):
         return self.response
     
-    def getTestResponse():
+    def getTestResponse(self):
         return peekResponse(
             topics=[
                 topic(
