@@ -1,7 +1,6 @@
 import grpc
 from protos.peek_pb2 import (
     peekRequest,
-    peekResponse
 )
 
 import compute.fetchers.gmail as gmail
@@ -34,8 +33,6 @@ def direct(request, context):
             response = twitter.fetch(request.userID)
         case _:
             print("Invalid App")
-
-    # Hume for sentiment analysis here
 
     if response is None:
         context.abort(grpc.StatusCode.INTERNAL, "Could not fetch data for app")

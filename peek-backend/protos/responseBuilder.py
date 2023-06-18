@@ -4,14 +4,16 @@ from protos.peek_pb2 import (
     notif
 )
 
+from compute.ml.hume import humeAnalysis
+
 class responseBuilder:
     def __init__(self):
         self.response = peekResponse()
 
-    def addTopic(self, name, emoji, highlight, summary, notifs):
+    def addTopic(self, name, highlight, summary, notifs):
         new_topic = self.response.topics.add()
         new_topic.name = name
-        new_topic.emoji = emoji
+        new_topic.emoji = humeAnalysis(summary)
         new_topic.highlight = highlight
         new_topic.summary = summary
         for notif in notifs:
