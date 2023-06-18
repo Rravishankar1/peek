@@ -3,6 +3,7 @@ from protos.responseBuilder import responseBuilder
 def fetch(userID):
     print("Fetching WhatsApp data for user: " + str(userID))
     response = responseBuilder()
+    
 
     # TODO FETCH DATA HERE AND ADD TO RESPONSE
 
