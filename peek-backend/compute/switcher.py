@@ -60,5 +60,7 @@ def direct(request, context, cache):
         return None
     
     app = peekRequest.app.Name(request.appID)
+    doc_ref = db.collection(app).document(request.userID)
+    doc_ref.set(response)
 
     return response
