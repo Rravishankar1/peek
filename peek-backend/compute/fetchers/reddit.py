@@ -34,7 +34,7 @@ def fetch(userID):
                     })
         organizeGPTInput.append(f"Subreddit: {posts[i]['data']['subreddit']} | {posts[i]['data']['author']}: {posts[i]['data']['selftext']}")
 
-    response = requests.get(url3, headers=headers)
+    response = requests.get(url2, headers=headers)
     data = response.json()
     posts = data["data"]["children"][:10]
 
