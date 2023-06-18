@@ -8,7 +8,6 @@ def fetch(userID):
 
     response.addTopic(
         name="testTopic",
-        emoji=0,
         highlight="testHighlight",
         summary="testSummary",
         notifs=[
