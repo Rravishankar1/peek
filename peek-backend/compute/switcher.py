@@ -18,6 +18,7 @@ import compute.fetchers.discord as discord
 import compute.fetchers.whatsapp as whatsapp
 import compute.fetchers.messenger as messenger
 import compute.fetchers.twitter as twitter
+import compute.fetchers.reddit as reddit
 
 def direct(request, context, cache):
     response = None
@@ -44,6 +45,9 @@ def direct(request, context, cache):
             case peekRequest.TWITTER:
                 print("Directing to Twitter fetcher")
                 response = twitter.fetch(request.userID)
+            case peekRequest.REDDIT:
+                print("Directing to Reddit fetcher")
+                response = reddit.fetch(request.userID)
             case _:
                 print("Invalid App")
 

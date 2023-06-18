@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\npeek.proto\x12\x04peek\"1\n\x0buserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\x1e\n\x0cuserResponse\x12\x0e\n\x06userID\x18\x01 \x01(\x05\"\xeb\x01\n\x0bpeekRequest\x12\x0e\n\x06userID\x18\x01 \x01(\x05\x12$\n\x05\x61ppID\x18\x02 \x01(\x0e\x32\x15.peek.peekRequest.app\x12\x0e\n\x06token1\x18\x03 \x01(\t\x12\x0e\n\x06token2\x18\x04 \x01(\t\x12\x0e\n\x06token3\x18\x05 \x01(\t\x12\x0e\n\x06token4\x18\x06 \x01(\t\x12\x0e\n\x06token5\x18\x07 \x01(\t\"V\n\x03\x61pp\x12\t\n\x05GMAIL\x10\x00\x12\r\n\tINSTAGRAM\x10\x01\x12\x0b\n\x07\x44ISCORD\x10\x02\x12\x0c\n\x08WHATSAPP\x10\x03\x12\r\n\tMESSENGER\x10\x04\x12\x0b\n\x07TWITTER\x10\x05\"+\n\x0cpeekResponse\x12\x1b\n\x06topics\x18\x01 \x03(\x0b\x32\x0b.peek.topic\"e\n\x05topic\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x65moji\x18\x02 \x01(\t\x12\x11\n\thighlight\x18\x03 \x01(\t\x12\x0f\n\x07summary\x18\x04 \x01(\t\x12\x1b\n\x06notifs\x18\x05 \x03(\x0b\x32\x0b.peek.notif\"#\n\x05notif\x12\r\n\x05title\x18\x01 \x01(\t\x12\x0b\n\x03uri\x18\x02 \x01(\t2\xe0\x01\n\x0bpeekService\x12\x30\n\x07\x61\x64\x64User\x12\x11.peek.userRequest\x1a\x12.peek.userResponse\x12\x32\n\tloginUser\x12\x11.peek.userRequest\x1a\x12.peek.userResponse\x12\x36\n\rgetCachedData\x12\x11.peek.peekRequest\x1a\x12.peek.peekResponse\x12\x33\n\ngetNewData\x12\x11.peek.peekRequest\x1a\x12.peek.peekResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\npeek.proto\x12\x04peek\"1\n\x0buserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\x1e\n\x0cuserResponse\x12\x0e\n\x06userID\x18\x01 \x01(\x05\"\xf7\x01\n\x0bpeekRequest\x12\x0e\n\x06userID\x18\x01 \x01(\x05\x12$\n\x05\x61ppID\x18\x02 \x01(\x0e\x32\x15.peek.peekRequest.app\x12\x0e\n\x06token1\x18\x03 \x01(\t\x12\x0e\n\x06token2\x18\x04 \x01(\t\x12\x0e\n\x06token3\x18\x05 \x01(\t\x12\x0e\n\x06token4\x18\x06 \x01(\t\x12\x0e\n\x06token5\x18\x07 \x01(\t\"b\n\x03\x61pp\x12\t\n\x05GMAIL\x10\x00\x12\r\n\tINSTAGRAM\x10\x01\x12\x0b\n\x07\x44ISCORD\x10\x02\x12\x0c\n\x08WHATSAPP\x10\x03\x12\r\n\tMESSENGER\x10\x04\x12\x0b\n\x07TWITTER\x10\x05\x12\n\n\x06REDDIT\x10\x06\"+\n\x0cpeekResponse\x12\x1b\n\x06topics\x18\x01 \x03(\x0b\x32\x0b.peek.topic\"e\n\x05topic\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x65moji\x18\x02 \x01(\t\x12\x11\n\thighlight\x18\x03 \x01(\t\x12\x0f\n\x07summary\x18\x04 \x01(\t\x12\x1b\n\x06notifs\x18\x05 \x03(\x0b\x32\x0b.peek.notif\"#\n\x05notif\x12\r\n\x05title\x18\x01 \x01(\t\x12\x0b\n\x03uri\x18\x02 \x01(\t2\xe0\x01\n\x0bpeekService\x12\x30\n\x07\x61\x64\x64User\x12\x11.peek.userRequest\x1a\x12.peek.userResponse\x12\x32\n\tloginUser\x12\x11.peek.userRequest\x1a\x12.peek.userResponse\x12\x36\n\rgetCachedData\x12\x11.peek.peekRequest\x1a\x12.peek.peekResponse\x12\x33\n\ngetNewData\x12\x11.peek.peekRequest\x1a\x12.peek.peekResponseb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'peek_pb2', globals())
@@ -25,15 +25,15 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _USERRESPONSE._serialized_start=71
   _USERRESPONSE._serialized_end=101
   _PEEKREQUEST._serialized_start=104
-  _PEEKREQUEST._serialized_end=339
+  _PEEKREQUEST._serialized_end=351
   _PEEKREQUEST_APP._serialized_start=253
-  _PEEKREQUEST_APP._serialized_end=339
-  _PEEKRESPONSE._serialized_start=341
-  _PEEKRESPONSE._serialized_end=384
-  _TOPIC._serialized_start=386
-  _TOPIC._serialized_end=487
-  _NOTIF._serialized_start=489
-  _NOTIF._serialized_end=524
-  _PEEKSERVICE._serialized_start=527
-  _PEEKSERVICE._serialized_end=751
+  _PEEKREQUEST_APP._serialized_end=351
+  _PEEKRESPONSE._serialized_start=353
+  _PEEKRESPONSE._serialized_end=396
+  _TOPIC._serialized_start=398
+  _TOPIC._serialized_end=499
+  _NOTIF._serialized_start=501
+  _NOTIF._serialized_end=536
+  _PEEKSERVICE._serialized_start=539
+  _PEEKSERVICE._serialized_end=763
 # @@protoc_insertion_point(module_scope)

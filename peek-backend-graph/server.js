@@ -25,6 +25,7 @@ const typeDefs = gql`
     WHATSAPP
     MESSENGER
     TWITTER
+    REDDIT
   }
 
   type notif {
