@@ -15,3 +15,5 @@ Make a responseBuilder(), .addTopic() to add topics, and .build() to create the 
 To compile changes to peek.proto:
 python3 -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. peek.proto
 Then, go into peek_pb2_grpc.py and change line 5 to import protos.peek_pb2 as peek__pb2
+
+npx protoc --ts_out . --proto_path . ./peek.proto
