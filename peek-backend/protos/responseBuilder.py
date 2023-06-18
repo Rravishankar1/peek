@@ -4,7 +4,7 @@ from protos.peek_pb2 import (
     notif
 )
 
-from compute.ml.hume import humeAnalysis
+from compute.ml.hume_analysis import humeAnalysis
 
 class responseBuilder:
     def __init__(self):

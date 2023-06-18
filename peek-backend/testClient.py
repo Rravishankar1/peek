@@ -16,7 +16,7 @@ def testClient():
     stub = peekServiceStub(channel)
 
     # create a valid request message
-    request = peekRequest(userID=123, appID=peekRequest.DISCORD)
+    request = peekRequest(userID=123, appID=peekRequest.TWITTER)
 
     # make the call
     response = stub.getNewData(request)

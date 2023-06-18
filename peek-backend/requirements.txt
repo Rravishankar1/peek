@@ -2,5 +2,5 @@ grpcio
 grpcio-tools
 requests
 hume
-"hume[stream]"
+hume[stream]
 asyncio
