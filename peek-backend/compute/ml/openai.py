@@ -21,8 +21,8 @@ def summarize(topic, messages, app_name):
     response = generate_chat_completion([system_message, user_message])
     return json.loads(response)
 
-def sort_priority(topics, summaries):
-    
+# def sort_priority(topics, summaries):
+#     ...
 
 def generate_chat_completion(messages, model="gpt-4", temperature=1, max_tokens = None):
     headers = {
