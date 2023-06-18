@@ -4,3 +4,4 @@ requests
 hume
 hume[stream]
 asyncio
+python-dotenv

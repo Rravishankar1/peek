@@ -1,7 +1,11 @@
 import requests
 import json
-API_KEY = "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"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 API_ENDPOINT = "https://api.openai.com/v1/chat/completions"
+API_KEY = os.getenv('OPENAI_API_KEY')
 
 def organize_topics(topics, app_name):
     #returns {"topic1": [1, 2, ...], "topic2":[3,..]} etc.
