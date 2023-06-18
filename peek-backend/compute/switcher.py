@@ -51,6 +51,6 @@ def direct(request, context, cache):
         context.abort(grpc.StatusCode.INTERNAL, "Could not fetch data for app")
         return None
     
-    print(peekRequest.Name(request.appID)+ " data fetched successfully")
+    app = peekRequest.app.Name(request.appID)
 
     return response
