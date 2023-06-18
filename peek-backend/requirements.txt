@@ -13,3 +13,4 @@ google-auth-oauthlib==0.4.6
 mindsdb_sdk
 pybase64
 pyairtable
+slack
