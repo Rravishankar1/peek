@@ -34,6 +34,11 @@ message peekRequest {
 
     int32 userID = 1;
     app appID = 2;
+    string token1 = 3;
+    string token2 = 4;
+    string token3 = 5;
+    string token4 = 6;
+    string token5 = 7;
 }
 
 message peekResponse {

@@ -51,6 +51,11 @@ const typeDefs = gql`
   input peekRequest {
     userID: Int
     appID: app
+    token1: String
+    token2: String
+    token3: String
+    token4: String
+    token5: String
   }
 
   input userRequest {
