@@ -27,6 +27,7 @@ class responseBuilder:
         return self
 
     def build(self):
+        print("Response built:\n" + str(self.response))
         return self.response
     
     def getTestResponse(self):
