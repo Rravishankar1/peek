@@ -1,4 +1,0 @@
-# TBD
-
-def compute():
-    pass

@@ -16,12 +16,11 @@ def testClient():
     stub = peekServiceStub(channel)
 
     # create a valid request message
-    request = peekRequest(userID=123, appID=456)
+    request = peekRequest(userID=123, appID=peekRequest.GMAIL)
 
     # make the call
     response = stub.getNewData(request)
 
-    # et voila
     print(response)
 
 if __name__ == '__main__':

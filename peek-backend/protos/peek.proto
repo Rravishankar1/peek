@@ -1,5 +1,3 @@
-// Python compile: python3 -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. peek.proto
-
 syntax = "proto3";
 
 package peek;
@@ -25,8 +23,17 @@ message userResponse {
 1 = Instagram
 */
 message peekRequest {
+    enum app {
+        GMAIL = 0;
+        INSTAGRAM = 1;
+        DISCORD = 2;
+        WHATSAPP = 3;
+        MESSENGER = 4;
+        TWITTER = 5;
+    }
+
     int32 userID = 1;
-    int32 appID = 2;
+    app appID = 2;
 }
 
 message peekResponse {
