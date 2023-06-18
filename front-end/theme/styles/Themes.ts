@@ -1,3 +1,4 @@
+import {Dimensions} from 'react-native'
 // export const ThemeContext = createContext<ThemeProps>
 
 export enum backgroundColors {
@@ -6,8 +7,8 @@ export enum backgroundColors {
 }
 
 export const themes = {
-    "gmail_dark": "#504040",
-    "gmail_light": "#9E0A0A"
+    "gmail_dark": "#540D0D",
+    "gmail_light": "#9E0A0A",
 }
 
 export const GUTTER = 10;
@@ -17,3 +18,5 @@ export const rgb2hsv = (r: number, g: number, b: number) => {
     let h= c && ((v==r) ? (g-b)/c : ((v==g) ? 2+(b-r)/c : 4+(r-g)/c)); 
     return [60*(h<0?h+6:h), v&&c/v, v];
   }
+
+//   export const SCREN_WIDTH
