@@ -16,7 +16,6 @@ channels_url = f"{base_url}/guilds/{guild_id}/channels"
 def fetch(userID):
     print("Fetching Discord data for user: " + str(userID))
     response = responseBuilder()
-    return response.getTestResponse()
 
     headers = {
         "Authorization": f"Bot {API_TOKEN}"
