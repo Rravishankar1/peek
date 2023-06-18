@@ -2,48 +2,107 @@ from protos.responseBuilder import responseBuilder
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 import time
+import mindsdb_sdk
+import email
+import base64
+from pyairtable import Api, Base, Table
+import os 
+from dotenv import load_dotenv
+from compute.ml.openai import organize_topics, summarize
+import re
 
-def fetch(userID, token1):
+load_dotenv()
+AIRTABLE_KEY = os.getenv('AIRTABLE_API_KEY')
+MINDSDB_PW = os.getenv('MINDSDB_PASSWORD')
+table = Table(AIRTABLE_KEY, 'app94elbP4BNe2dsY', 'tbltPSysCiL0KdC48')
+
+server = mindsdb_sdk.connect('https://cloud.mindsdb.com', login='thomasychen@berkeley.edu', password=MINDSDB_PW)
+mindsdb_airtable = server.get_database('airtable_datasource')
+project = server.get_project()
+my_table = mindsdb_airtable.get_table('Emails')
+my_model = project.get_model("peek_gpt_model_4")
+clean = re.compile('<.*?>')
+bs = re.compile('\\\\.?')
+
+def fetch(userID, token1, token2, token3, token4):
     print("Fetching Gmail data for user: " + str(userID))
-    response = responseBuilder()
+    #response = responseBuilder()
 
     # TODO FETCH DATA HERE AND ADD TO RESPONSE
-    recent_messages = get_unopened_emails_last_2_hours(token1)
-    return recent_messages
+    recent_messages, ids = get_unopened_emails_last_2_hours(token1, token2, token3, token4)
+    if len(recent_messages) == 0:
+        return None
+    subjects = []
+    cleaned_email_bodies = []
+    for raw_message, content in recent_messages:
+        email_meta = email.message_from_bytes(
+            base64.urlsafe_b64decode(raw_message['raw'])
+        )
+        subject = email_meta["Subject"]
+        address = email_meta["To"]
+        sender = email_meta["From"]
+        subjects.append(f"From:{sender}, To: {address} -- Subject: " + str(subject))
+        no_html = re.sub(clean, "", str(content))
+        no_bs = re.sub(bs, "", no_html)
+        no_space = re.sub(" +", " ", no_bs)
+        no_long_strings = re.sub('\S{20,}', '',no_space)
+        cleaned_email_bodies.append(no_long_strings)
+    #     table.create({"Sender": str(sender), "Address": str(address), "Subject": str(subject), "Body": str(content), "UserID": str(userID)})
+    # cleaned_email_bodies = my_model.predict(my_table.limit(10))
+    # for records in table.iterate(page_size=10, max_records=1000):
+    #     ids = [record["id"] for record in records]
+    #     table.batch_delete(ids)
+    
+    topicResponse = organize_topics(subjects, "Gmail")
+    for topic in topicResponse: 
+        summarizeGPTInput = []
+        notifs = []
+        for i in topicResponse[topic]:
+            summarizeGPTInput.append(f"{subjects[int(i)]} | {cleaned_email_bodies[int(i)]}")
+            notifs.append({
+                "title": f"{subjects[int(i)]}",
+                "uri": f"https://mail.google.com/mail/u/0/#label/all/{ids[int(i)]}" #link might not work LOL
+            })
+        summarized = summarize(summarizeGPTInput, topic, "Gmail")
+        print(topic, summarized["highlight"], summarized["summary"], notifs)
+        response.addTopic(
+            name=topic,
+            highlight=summarized["highlight"],
+            summary=summarized["summary"],
+            notifs=notifs
+        )
 
-    response.addTopic(
-        name="testTopic",
-        highlight="testHighlight",
-        summary="testSummary",
-        notifs=[
-            {
-                "title": "testTitle1",
-                "uri": "testURI1"
-            },
-            {
-                "title": "testTitle2",
-                "uri": "testURI2"
-            }
-        ]
-    )
     return response.build()
 
 
-def get_gmail_service(access_token):
-    creds = Credentials.from_authorized_user_info(info={"access_token": access_token})
+def get_gmail_service(access_token, refresh_token, client_id, client_secret):
+    creds = Credentials.from_authorized_user_info(info={"access_token": access_token, "client_secret": client_secret, 
+    "client_id":client_id, "refresh_token":refresh_token}, scopes=["https://www.googleapis.com/auth/gmail.readonly"])
     service = build('gmail', 'v1', credentials=creds)
     return service
 
-def get_unopened_emails_last_2_hours(access_token, user_id='me'):
-    service = get_gmail_service(access_token)
-    two_hours_ago_ms = int((time.time() - 2 * 60 * 60) * 1000)  # Convert to milliseconds
-    query = f'is:unread after:{two_hours_ago_ms}'
-    results = service.users().messages().list(userId=user_id, q=query).execute()
+def get_unopened_emails_last_2_hours(access_token, refresh_token, client_id, client_secret, user_id='me'):
+    service = get_gmail_service(access_token, refresh_token, client_id, client_secret)
+    query = f'is:unread newer_than:10h to:me'
+    results = service.users().messages().list(userId=user_id, q = query).execute()
     message_ids = results.get('messages', [])
-    
     messages = []  # Create a list to store message details
+    ids = []
     for message_id in message_ids:
-        message = service.users().messages().get(userId=user_id, id=message_id['id']).execute()
-        messages.append(message)  # Append each message's details to the list
+        ids.append(message_id["id"])
+        raw_message = service.users().messages().get(userId=user_id, id=message_id['id'], format="raw", metadataHeaders=None).execute()
+        message_full = service.users().messages().get(userId=user_id, id=message_id['id']).execute()
+        email_content = ""
+        if 'data' in message_full['payload']['body'].keys():
+            email_content += message_full['payload']['body']['data']
+        else: 
+            for part in message_full['payload']['parts']:
+                email_content = email_content + part['body']['data'] 
+        test = bytes(str(email_content),encoding='utf-8')
+        email_content = base64.urlsafe_b64decode(test)
+        messages.append((raw_message, email_content))  # Append each message's details to the list
     
-    return messages
+    return messages, ids
+
+#sample function call
+#fetch("123", "ya29.a0AWY7Ckm0XcyOQ3wcQCZUeA5ZNOjwCAbCdsGPBj6qMz1IzfyFPOw-MaWyQPS9Hyuf0qK7kNX0n3pPDXmZpR1P2LcADKj5ehqeu1y7svIGD4Lmeu2AgMbmn7IvJy_tc37T7Hs4ZRxQsCVaZRX-ucjNrvlPIG7hnbnHaCgYKAWASARESFQG1tDrpA0FE6GxAc1mcPLV_iYF8Cw0167", "1//04ZL639wMjMLxCgYIARAAGAQSNwF-L9IrJvwIP0ue3Bj2Jv6Z0F-q5N3P7jtiim2k6tjWuhtYvO55ARipjZwbKl8d8T0ePvKUon4", "569421655023-8rrv1eve2nmee1ajes87tskpkl69mb6l.apps.googleusercontent.com", "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")

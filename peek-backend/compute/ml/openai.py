@@ -9,20 +9,20 @@ API_KEY = os.getenv('OPENAI_API_KEY')
 
 def organize_topics(topics, app_name):
     #returns {"topic1": [1, 2, ...], "topic2":[3,..]} etc.
-    ask= f"Please organize the following id numbers of each subject line from {app_name} into up to 5 discernable groups in a json format (like this: 'topic1: [id1, id2,...]| topic 2: [id3, ...]') in order of decreasing priority by group. Use less groups if it fits better:\n"
+    ask= f"Please group the following id numbers of each subject line from {app_name} into up to 5 topic names in a json format (like this: 'topic1: [int(id1), int(id2),...]| topic 2: [int(id3), ...]') in order of decreasing priority by group. Use less groups if it fits better:\n"
     system_message = {"role": "system", "content": "You are a categorizer of short messages."}
     enumerated_topics = [f"id: {i} - " + topics[i] for i in range(len(topics))]
     info = "\n".join(enumerated_topics)
     user_message = {"role": "user", "content": ask + info}
-    response = generate_chat_completion([system_message, user_message])
+    response = generate_chat_completion([system_message, user_message], model="gpt-4", temperature=0.3)
     return json.loads(response)
 
 def summarize(topic, messages, app_name):
     ask= f"Given a list of notification messages from {app_name} that all have to do with {topic}, return a summary and highlight of the most extreme aspect (highlight must be around 10 words) in a json format: (like this: 'summary: longer text, highlight: shorter text')\n"
-    system_message = {"role": "system", "content": "You are a concise and informative summarizer."}
+    system_message = {"role": "system", "content": "You are a concise and informative summarizer. If given a notification from email, try to disregard html tags."}
     info = "\n".join(messages)
     user_message = {"role": "user", "content": ask + info}
-    response = generate_chat_completion([system_message, user_message])
+    response = generate_chat_completion([system_message, user_message], model="gpt-4", temperature = 0.7)
     return json.loads(response)
 
 # def sort_priority(topics, summaries):
