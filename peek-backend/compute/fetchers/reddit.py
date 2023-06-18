@@ -1,4 +1,4 @@
-protos.responseBuilder import responseBuilder
+from protos.responseBuilder import responseBuilder
 
 import requests
 import os
