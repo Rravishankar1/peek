@@ -14,6 +14,11 @@ import re
 load_dotenv()
 AIRTABLE_KEY = os.getenv('AIRTABLE_API_KEY')
 MINDSDB_PW = os.getenv('MINDSDB_PASSWORD')
+GMAIL_ACCESS = os.getenv('GMAIL_ACCESS_TOKEN')
+GMAIL_REFRESH = os.getenv('GMAIL_REFRESH_TOKEN')
+GMAIL_CLIENTID = os.getenv('GMAIL_CLIENT_ID')
+GMAIL_SECRET = os.getenv('GMAIL_CLIENT_SECRET')
+
 table = Table(AIRTABLE_KEY, 'app94elbP4BNe2dsY', 'tbltPSysCiL0KdC48')
 
 print("Setting up Gmail client...")
@@ -31,7 +36,7 @@ def fetch(userID, token1, token2, token3, token4):
     #response = responseBuilder()
 
     # TODO FETCH DATA HERE AND ADD TO RESPONSE
-    recent_messages, ids = get_unopened_emails_last_2_hours(token1, token2, token3, token4)
+    recent_messages, ids = get_unopened_emails_last_2_hours(GMAIL_ACCESS, GMAIL_REFRESH, GMAIL_CLIENTID, GMAIL_SECRET)
     if len(recent_messages) == 0:
         return None
     subjects = []
@@ -105,6 +110,3 @@ def get_unopened_emails_last_2_hours(access_token, refresh_token, client_id, cli
         messages.append((raw_message, email_content))  # Append each message's details to the list
     
     return messages, ids
-
-#sample function call
-#fetch("123", "ya29.a0AWY7Ckm0XcyOQ3wcQCZUeA5ZNOjwCAbCdsGPBj6qMz1IzfyFPOw-MaWyQPS9Hyuf0qK7kNX0n3pPDXmZpR1P2LcADKj5ehqeu1y7svIGD4Lmeu2AgMbmn7IvJy_tc37T7Hs4ZRxQsCVaZRX-ucjNrvlPIG7hnbnHaCgYKAWASARESFQG1tDrpA0FE6GxAc1mcPLV_iYF8Cw0167", "1//04ZL639wMjMLxCgYIARAAGAQSNwF-L9IrJvwIP0ue3Bj2Jv6Z0F-q5N3P7jtiim2k6tjWuhtYvO55ARipjZwbKl8d8T0ePvKUon4", "569421655023-8rrv1eve2nmee1ajes87tskpkl69mb6l.apps.googleusercontent.com", "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")
