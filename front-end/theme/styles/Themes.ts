@@ -11,7 +11,7 @@ export const themes = {
   discord_dark: "#4D53E8",
   discord_light: "#6B83FD",
   slack_dark: "#832FEE",
-  slack_light: "#B678E8 ",
+  slack_light: "#B678E8",
   whatsapp_dark: "#004B30",
   whatsapp_light: "#007320",
   reddit_dark: "#FF6E43",

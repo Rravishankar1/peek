@@ -54,7 +54,21 @@ const HomeContainer: React.FC = () => {
       },
     },
   });
-  if (loadingDiscord || loadingReddit || loadingGmail)
+
+  const {
+    loading: loadingSlack,
+    error: errorSlack,
+    data: dataSlack,
+  } = useQuery(CONTINENT_QUERY, {
+    variables: {
+      request: {
+        userID: 123,
+        appID: "SLACK",
+      },
+    },
+  });
+
+  if (loadingDiscord || loadingReddit || loadingGmail || loadingSlack)
     return <Text>Loading</Text>;
   const discordResponse = dataDiscord.getCachedData
     ? dataDiscord.getCachedData.topics
@@ -65,8 +79,10 @@ const HomeContainer: React.FC = () => {
   const gmailResponse = dataGmail.getCachedData
     ? dataGmail.getCachedData.topics
     : dataGmail.getNewData.topics;
+  const slackResponse = dataSlack.getCachedData
+  ? dataSlack.getCachedData.topics
+  : dataSlack.getNewData.topics;
 
-  console.log(discordResponse);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -82,6 +98,9 @@ const HomeContainer: React.FC = () => {
         </View>
         <View style={styles.appContainer}>
           <AppContainer topics={gmailResponse} app={"gmail"}></AppContainer>
+        </View>
+        <View style={styles.appContainer}>
+          <AppContainer topics={slackResponse} app={"slack"}></AppContainer>
         </View>
       </ScrollView>
       {/* <LoginContainer/> */}

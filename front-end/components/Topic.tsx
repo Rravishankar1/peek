@@ -41,7 +41,7 @@ const Topic: React.FC<Props> = props => {
             marginVertical: GUTTER * 0.5,
             paddingVertical: GUTTER * 0.5,
             paddingHorizontal: GUTTER * 2,
-            width: "75%",
+            maxWidth: "75%",
             // alignItems: 'space-between',
         },
         topicText: {
