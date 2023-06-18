@@ -26,6 +26,7 @@ const typeDefs = gql`
     MESSENGER
     TWITTER
     REDDIT
+    SLACK
   }
 
   type notif {

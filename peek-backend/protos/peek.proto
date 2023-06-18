@@ -31,6 +31,7 @@ message peekRequest {
         MESSENGER = 4;
         TWITTER = 5;
         REDDIT = 6;
+        SLACK = 7;
     }
 
     int32 userID = 1;
