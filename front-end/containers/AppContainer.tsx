@@ -26,115 +26,124 @@ interface Props {
 const app = (app_name: string) => {
   switch (app_name) {
     case "gmail":
-      return "../assets/social_icons/gmail.png";
-    default: 
-        return "../assets/social_icons/gmail.png";
+      return require("../assets/social_icons/gmail.png");
+    case "discord":
+      return require("../assets/social_icons/discord.png");
+    case "slack":
+      return require("../assets/social_icons/slack.png");
+    case "reddit":
+      return require("../assets/social_icons/reddit.png");
+    default:
+      return require("../assets/social_icons/gmail.png");
   }
 };
 
 const appColor = (app_name: string) => {
-    switch (app_name) {
-        case "gmail":
-            return [themes.gmail_light, themes.gmail_dark];
-        case "discord": 
-            return [themes.discord_light, themes.discord_dark];
-    }
-}
-
+  switch (app_name) {
+    case "gmail":
+      return [themes.gmail_light, themes.gmail_dark];
+    case "discord":
+      return [themes.discord_light, themes.discord_dark];
+    case "reddit":
+      return [themes.reddit_light, themes.reddit_dark];
+    case "slack":
+      return [themes.slack_light, themes.slack_dark];
+  }
+};
 
 const AppContainer: React.FC<Props> = (props) => {
-    const [light, dark] = appColor(props.app);
-    const expandedStyles = StyleSheet.create({
-        container: {
-          flex: 0,
-        },
-        title: {
-          fontSize: 20,
-          color: "#fff",
-        },
-        titleContainer: {
-          paddingVertical: GUTTER * 2,
-        },
-        titleLogoContainer: {
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: GUTTER * 3,
-        },
-        topicContainer: {
-          backgroundColor: "transparent",
-        },
-        width33: {
-          width: "33%",
-          alignItems: "center",
-        },
-      });
-      
-      const styles = StyleSheet.create({
-        container: {
-          backgroundColor: dark,
-          borderRadius: 25,
-        //   flex: 1,
-          // paddingVertical: GUTTER
-        },
-        containerExpanded: {
-          backgroundColor: "black",
-          borderRadius: 25,
-          // flex: 1,
-        },
-        footerLeft: {
-          width: "20%",
-        },
-        footerMiddle: {
-          width: "60%",
-          alignItems: "center",
-          justifyContent: "center",
-        },
-        footerRight: {
-          width: "20%",
-        },
-        titleContainer: {
-          backgroundColor: light,
-          borderRadius: 15,
-          marginHorizontal: GUTTER * 2,
-          paddingHorizontal: GUTTER * 2,
-          paddingVertical: GUTTER,
-        },
-        titleLogoContainer: {
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginVertical: GUTTER * 2,
-        },
-        title: {
-          fontSize: 24,
-          color: "#fff",
-        },
-        topicContainer: {
-          backgroundColor: light,
-          marginHorizontal: GUTTER * 2,
-          borderRadius: 15,
-        },
-        flexOne: {
-          flexGrow: 1,
-        },
-        footerContainer: {
-          marginVertical: GUTTER,
-          alignItems: "center",
-        },
-        footerTextContainer: {
-          marginVertical: GUTTER,
-        },
-        notificationsNumberContainer: {
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 20,
-          backgroundColor: light,
-          height: 30,
-          width: 30,
-        },
-      });
-  const img = require("../assets/social_icons/gmail.png");
+  const [light, dark] = appColor(props.app);
+  const expandedStyles = StyleSheet.create({
+    container: {
+      flex: 0,
+    },
+    title: {
+      fontSize: 20,
+      color: "#fff",
+    },
+    titleContainer: {
+      paddingVertical: GUTTER * 2,
+    },
+    titleLogoContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: GUTTER * 3,
+    },
+    topicContainer: {
+      backgroundColor: "transparent",
+    },
+    width33: {
+      width: "33%",
+      alignItems: "center",
+    },
+  });
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: dark,
+      borderRadius: 25,
+      //   flex: 1,
+      // paddingVertical: GUTTER
+    },
+    containerExpanded: {
+      backgroundColor: "black",
+      borderRadius: 25,
+      // flex: 1,
+    },
+    footerLeft: {
+      width: "20%",
+    },
+    footerMiddle: {
+      width: "60%",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    footerRight: {
+      width: "20%",
+    },
+    titleContainer: {
+      backgroundColor: light,
+      borderRadius: 15,
+      marginHorizontal: GUTTER * 2,
+      paddingHorizontal: GUTTER * 2,
+      paddingVertical: GUTTER,
+    },
+    titleLogoContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      marginVertical: GUTTER * 2,
+    },
+    title: {
+      fontSize: 24,
+      color: "#fff",
+    },
+    topicContainer: {
+      backgroundColor: light,
+      marginHorizontal: GUTTER * 2,
+      borderRadius: 15,
+    },
+    flexOne: {
+      flexGrow: 1,
+    },
+    footerContainer: {
+      marginVertical: GUTTER,
+      alignItems: "center",
+    },
+    footerTextContainer: {
+      marginVertical: GUTTER,
+    },
+    notificationsNumberContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 20,
+      backgroundColor: light,
+      height: 30,
+      width: 30,
+    },
+  });
+  const img = app(props.app);
   const totalNotifs = props.topics.reduce(
     (accumulator, currentValue) => accumulator + currentValue.notifs.length,
     0
@@ -155,7 +164,7 @@ const AppContainer: React.FC<Props> = (props) => {
           </TouchableOpacity>
           <ScrollView style={styles.topicContainer}>
             {props.topics.map((topic, topicIndex) => (
-              <Topic topic={topic} expanded={expanded} app={props.app}/>
+              <Topic topic={topic} expanded={expanded} app={props.app} />
             ))}
           </ScrollView>
           <View style={styles.footerContainer}>
@@ -206,7 +215,11 @@ const AppContainer: React.FC<Props> = (props) => {
             style={[styles.topicContainer, expandedStyles.topicContainer]}
           >
             {props.topics.slice(0, 3).map((topic, topicIndex) => (
-              <ExpandedTopic topic={topic} expanded={expanded} app={props.app}/>
+              <ExpandedTopic
+                topic={topic}
+                expanded={expanded}
+                app={props.app}
+              />
             ))}
           </ScrollView>
           <TouchableOpacity onPress={handlePress}>
@@ -219,7 +232,5 @@ const AppContainer: React.FC<Props> = (props) => {
     </View>
   );
 };
-
-
 
 export default AppContainer;

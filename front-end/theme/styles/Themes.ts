@@ -14,6 +14,8 @@ export const themes = {
   slack_light: "#B678E8 ",
   whatsapp_dark: "#004B30",
   whatsapp_light: "#007320",
+  reddit_dark: "#FF6E43",
+  reddit_light: "#FF906D",
 };
 
 export const GUTTER = 10;
@@ -36,7 +38,10 @@ export const appColor = (app_name: string) => {
       return [themes.slack_light, themes.slack_dark];
     case "whatsapp":
       return [themes.whatsapp_light, themes.whatsapp_dark];
+      case "reddit":
+        return [themes.reddit_light, themes.reddit_dark];
   }
 };
 
 //   export const SCREN_WIDTH
+

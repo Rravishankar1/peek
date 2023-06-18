@@ -4,7 +4,7 @@ import { peekRequest } from "../protos/peek";
 
 export const CONTINENT_QUERY = gql`
     query getNewData($request: peekRequest) {
-        getNewData(request: $request) {
+        getCachedData(request: $request) {
         topics {
             name
             emoji

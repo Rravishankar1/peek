@@ -28,6 +28,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
+        {/* <Text>hello</Text> */}
         <HomeContainer/>
         {/* <SafeAreaView style={styles.container}>
             <View style={styles.titleContainer}>

@@ -38,13 +38,15 @@ const Topic: React.FC<Props> = props => {
         nameTextContainer: {
             borderRadius: 12,
             backgroundColor: dark,
+            marginVertical: GUTTER * 0.5,
             paddingVertical: GUTTER * 0.5,
             paddingHorizontal: GUTTER * 2,
+            width: "75%",
             // alignItems: 'space-between',
         },
         topicText: {
             color: "#fff",
-            fontSize: 20
+            fontSize: 15
         },
         summaryContainer: {
             // marginVertical: GUTTER * 2,
