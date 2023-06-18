@@ -20,6 +20,7 @@ def testClient():
 
     # make the call
     response = stub.getNewData(request)
+    #response = stub.getCachedData(request)
 
     print(response)
 

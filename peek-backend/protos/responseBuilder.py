@@ -34,7 +34,7 @@ class responseBuilder:
         return peekResponse(
             topics=[
                 topic(
-                    name="testTopic",
+                    name="testTopic3",
                     emoji="123",
                     highlight="testHighlight",
                     summary="testSummary",

@@ -34,7 +34,6 @@ def fetch(userID):
     for channel in slackResponse['channels']:
         channelId = channel['id']
         channelName = channel['name']
-        print(f'Channel: {channelName}')
         
         history = client.conversations_history(channel=channelId, limit=10)
         msgs = history['messages']

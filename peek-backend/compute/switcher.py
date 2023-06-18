@@ -1,11 +1,12 @@
 import grpc
 from protos.peek_pb2 import (
     peekRequest,
+    peekResponse
 )
 
 import os
 from google.cloud import firestore
-from google.protobuf.json_format import MessageToDict
+from google.protobuf.json_format import MessageToDict, ParseDict
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 relative_path = "../keys/peek-credentials.json"
@@ -26,10 +27,14 @@ import compute.fetchers.slack as slack
 
 def direct(request, context, cache):
     response = None
+    app = peekRequest.app.Name(request.appID)
+    doc_ref = db.collection(app).document(str(request.userID))
+    doc = doc_ref.get()
 
-    if cache:
-        return response
+    if cache and doc.exists:
+        return ParseDict(doc.to_dict(), peekResponse())
     else:
+        cache = False
         match request.appID:
             case peekRequest.GMAIL:
                 print("Directing to Gmail fetcher")
@@ -63,8 +68,7 @@ def direct(request, context, cache):
         return None
     
     if not cache:
-        app = peekRequest.app.Name(request.appID)
-        doc_ref = db.collection(app).document(str(request.userID))
+        doc_ref.delete()
         doc_ref.set(MessageToDict(response))
         print("Response data cached to Firestore")
 
