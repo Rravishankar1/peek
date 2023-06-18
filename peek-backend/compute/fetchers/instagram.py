@@ -21,4 +21,4 @@ def fetch(userID):
             }
         ]
     )
-    return response.build()
+    return response.getTestResponse()

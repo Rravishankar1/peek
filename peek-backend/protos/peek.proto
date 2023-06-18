@@ -42,7 +42,7 @@ message peekResponse {
 
 message topic {
     string name = 1;
-    int32 emoji = 2;
+    string emoji = 2;
     string highlight = 3;
     string summary = 4;
     repeated notif notifs = 5;

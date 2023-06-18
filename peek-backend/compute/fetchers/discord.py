@@ -1,8 +1,11 @@
 from protos.responseBuilder import responseBuilder
 
 import requests
+import os
+from dotenv import load_dotenv
 
-API_TOKEN = "MTExOTc5NTIyMTQ3NjE2Nzc2MA.GQhHWk.JjXVNt4pRK5tNMM29rCqhIEpZGZY52ug1YtK68"
+load_dotenv()
+API_TOKEN = os.getenv('DISCORD_API_TOKEN')
 base_url = "https://discord.com/api"
 guild_id = "1119794281054482473"
 channels_url = f"{base_url}/guilds/{guild_id}/channels"
