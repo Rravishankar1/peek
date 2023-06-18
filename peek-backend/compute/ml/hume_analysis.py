@@ -82,6 +82,5 @@ async def get_emoji(samples):
             # print(max(emotions, emotions))
 
 def humeAnalysis(summary):
-
-    # return asyncio.run(get_emoji([summary]))
-    return "1"
+    return "🤓"
+    return asyncio.run(get_emoji([summary]))

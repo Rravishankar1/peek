@@ -19,12 +19,11 @@ class PeekService(peekServiceServicer):
 
     def getCachedData(self, request, context):
         print("Getting cached data for user: " + str(request.userID))
-        print("NOT YET IMPLEMENTED!")
-        context.abort(grpc.StatusCode.UNIMPLEMENTED, "Not yet implemented!")
+        return switcher.direct(request, context, True)
 
     def getNewData(self, request, context):
         print("Getting new data for user: " + str(request.userID))
-        return switcher.direct(request, context)  
+        return switcher.direct(request, context, False)  
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

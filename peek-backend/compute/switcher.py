@@ -3,6 +3,15 @@ from protos.peek_pb2 import (
     peekRequest,
 )
 
+import os
+from google.cloud import firestore
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+relative_path = "../keys/peek-credentials.json"
+KEY_PATH = os.path.join(current_dir, relative_path)
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = KEY_PATH
+db = firestore.Client()
+
 import compute.fetchers.gmail as gmail
 import compute.fetchers.instagram as instagram
 import compute.fetchers.discord as discord
@@ -10,7 +19,7 @@ import compute.fetchers.whatsapp as whatsapp
 import compute.fetchers.messenger as messenger
 import compute.fetchers.twitter as twitter
 
-def direct(request, context):
+def direct(request, context, cache):
     response = None
     match request.appID:
         case peekRequest.GMAIL:
@@ -36,4 +45,8 @@ def direct(request, context):
 
     if response is None:
         context.abort(grpc.StatusCode.INTERNAL, "Could not fetch data for app")
+        return None
+    
+    print(peekRequest.Name(request.appID)+ " data fetched successfully")
+
     return response

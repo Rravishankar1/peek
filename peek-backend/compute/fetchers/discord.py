@@ -16,6 +16,7 @@ channels_url = f"{base_url}/guilds/{guild_id}/channels"
 def fetch(userID):
     print("Fetching Discord data for user: " + str(userID))
     response = responseBuilder()
+    return response.getTestResponse()
 
     headers = {
         "Authorization": f"Bot {API_TOKEN}"
@@ -46,8 +47,11 @@ def fetch(userID):
                     "uri": f"https://discord.com/channels/{guild_id}/{channelID}/{message['id']}"
                 })
                 organizeGPTInput.append(f"Channel: {channelName} | {author}: {content}")
+    print("Organizing with GPT...")
     responseString = organize_topics(organizeGPTInput, "Discord")
+    print(responseString)
     for topic in responseString:
+        print("Summarizing with GPT...")
         summarizeGPTInput = []
         notifs = []
         for i in responseString[topic]:
@@ -56,12 +60,13 @@ def fetch(userID):
                 "title": f"#{messages[i]['channel']} | {messages[i]['author']}: {messages[i]['content']}",
                 "uri": messages[i]["uri"]
             })
+        
         summarized = summarize(summarizeGPTInput, topic, "Discord")
+        print(summarized)
         response.addTopic(
             name=topic,
             highlight=summarized["highlight"],
             summary=summarized["summary"],
             notifs=notifs
         )
-
     return response.build()
