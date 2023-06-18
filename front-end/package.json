@@ -9,13 +9,18 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.15",
+    "@mitch528/react-native-grpc": "^0.1.10",
     "@react-navigation/native": "^6.1.6",
+    "apollo-link-http": "^1.5.17",
     "expo": "~48.0.18",
     "expo-status-bar": "~1.4.4",
+    "graphql": "^15.8.0",
     "react": "18.2.0",
+    "react-apollo": "^3.1.5",
     "react-native": "0.71.8",
-    "react-native-screens": "~3.20.0",
     "react-native-safe-area-context": "4.5.0",
+    "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0"
   },
   "devDependencies": {
