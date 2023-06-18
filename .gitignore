@@ -3,3 +3,4 @@ __pycache__
 .env
 .vscode
 peek-credentials.json
+.venv
