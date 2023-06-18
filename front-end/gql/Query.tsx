@@ -18,3 +18,21 @@ export const CONTINENT_QUERY = gql`
         }
     }
 `;
+
+
+export const NEW_DATA = gql`
+    query getNewData($request: peekRequest) {
+        getNewData(request: $request) {
+        topics {
+            name
+            emoji
+            highlight
+            summary
+            notifs {
+            title
+            uri
+            }
+        }
+        }
+    }
+`;

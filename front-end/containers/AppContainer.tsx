@@ -16,7 +16,8 @@ import Topic from "../components/Topic";
 import ExpandedTopic from "../components/ExpandedTopic";
 import { isPropertySignature } from "typescript";
 import { useQuery } from "@apollo/client";
-import { CONTINENT_QUERY } from "../gql/Query";
+import { NEW_DATA } from "../gql/Query";
+import { gql } from "@apollo/client";
 
 interface Props {
   topics: topic[];
@@ -51,7 +52,66 @@ const appColor = (app_name: string) => {
   }
 };
 
+// const ImageComponent = () => {
+//   const { loading, error, data } = useQuery(NEW_DATA, {
+//     variables: {
+//       request: {
+//         userID: 123,
+//         appID: "DISCORD",
+//       },
+//     },
+//   });
+
+//   // Handle the loading, error, and data states as needed
+//   if (loading) {
+//     console.log("Loading...");
+//   } else if (error) {
+//     console.log("Error:", error.message);
+//   } else {
+//     console.log("Data:", data.getCachedData.topics);
+//   }
+
+//   return (
+//       <Image
+//         source={require("../assets/refresh.png")}
+//         style={{ width: 24, height: 24 }}
+//       />
+//     // </TouchableOpacity>
+//   );
+// };
+
 const AppContainer: React.FC<Props> = (props) => {
+  const ImageComponent = () => {
+    const { loading, error, data } = useQuery(NEW_DATA, {
+      variables: {
+        request: {
+          userID: 123,
+          appID: "DISCORD",
+        },
+      },
+    });
+  
+    // Handle the loading, error, and data states as needed
+    // if (loading) {
+    //   console.log("Loading...");
+    // } else if (error) {
+    //   console.log("Error:", error.message);
+    // } else {
+    //   console.log("Data:", data);
+    // }
+
+    while(loading) {
+    }
+    console.log(data)
+    return (
+        <Image
+          source={require("../assets/refresh.png")}
+          style={{ width: 24, height: 24 }}
+        />
+      // </TouchableOpacity>
+    );
+  };
+  const [dummy, setDummy] = useState(false);
   const [light, dark] = appColor(props.app);
   const expandedStyles = StyleSheet.create({
     container: {
@@ -152,16 +212,36 @@ const AppContainer: React.FC<Props> = (props) => {
   const handlePress = () => {
     setExpanded(!expanded);
   };
+
   return (
     <View style={styles.flexOne}>
       {expanded === true ? (
         <View style={styles.container}>
-          <TouchableOpacity onPress={handlePress}>
-            {/* // <View style={styles.container}> */}
-            <View style={styles.titleLogoContainer}>
-              <Image source={img} />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <View style={{ width: "33%" }}>
+              <Text> </Text>
             </View>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handlePress}>
+              <View style={styles.titleLogoContainer}>
+                <Image source={img} />
+              </View>
+            </TouchableOpacity>
+            <View
+              style={{ width: "33%", alignItems: "flex-end", paddingRight: 20 }}
+            >
+              <TouchableOpacity>
+                {/* {dummy ? <ImageComponent/> : <ImageComponent/>} */}
+              <Image source={require('../assets/refresh.png')} style={{width: 24, height: 24}}/>
+              {/* <ImageComponent /> */}
+              </TouchableOpacity>
+            </View>
+          </View>
           <ScrollView style={styles.topicContainer}>
             {props.topics.map((topic, topicIndex) => (
               <Topic topic={topic} expanded={expanded} app={props.app} />
@@ -191,6 +271,7 @@ const AppContainer: React.FC<Props> = (props) => {
           </View>
         </View>
       ) : (
+        // this is when it is not expanded
         <View style={[styles.container, expandedStyles.container]}>
           <View style={expandedStyles.titleLogoContainer}>
             <View style={expandedStyles.width33}>
