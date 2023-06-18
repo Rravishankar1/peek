@@ -76,10 +76,12 @@ async def get_emoji(samples):
 
             max_emotion = max(emotions, key=lambda x: x['score'])
             max_emotion_name = max_emotion['name']
+            print(max_emotion)
             return emotion_emojis[max_emotion_name]
             # print(f"{max_emotion_name} {emotion_emojis[max_emotion_name]}")
             # print(max(emotions, emotions))
 
 def humeAnalysis(summary):
 
-    return asyncio.run(get_emoji([summary]))
+    # return asyncio.run(get_emoji([summary]))
+    return "1"

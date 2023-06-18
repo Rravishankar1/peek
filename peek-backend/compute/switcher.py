@@ -15,7 +15,7 @@ def direct(request, context):
     match request.appID:
         case peekRequest.GMAIL:
             print("Directing to Gmail fetcher")
-            response = gmail.fetch(request.userID)
+            response = gmail.fetch(request.userID, request.token1, request.token2, request.token3,)
         case peekRequest.INSTAGRAM:
             print("Directing to Instagram fetcher")
             response = instagram.fetch(request.userID)

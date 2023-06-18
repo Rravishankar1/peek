@@ -83,7 +83,7 @@ def get_gmail_service(access_token, refresh_token, client_id, client_secret):
 
 def get_unopened_emails_last_2_hours(access_token, refresh_token, client_id, client_secret, user_id='me'):
     service = get_gmail_service(access_token, refresh_token, client_id, client_secret)
-    query = f'is:unread newer_than:10h to:me'
+    query = f'is:unread newer_than:5h to:me'
     results = service.users().messages().list(userId=user_id, q = query).execute()
     message_ids = results.get('messages', [])
     messages = []  # Create a list to store message details

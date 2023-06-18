@@ -1,18 +1,59 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import { topic } from '../protos/peek';
-import {GUTTER, themes} from "../theme/styles/Themes";
+import {GUTTER, themes, appColor} from "../theme/styles/Themes";
 import { useQuery } from "@apollo/client";
 import { CONTINENT_QUERY } from "../gql/Query";
 
 interface Props {
     topic: topic;
     expanded: boolean;
+    app: string;
+
 }
 
 
 const Topic: React.FC<Props> = props => {
-    const {loading, error, data} = useQuery(CONTINENT_QUERY);
+    const [_, dark] = appColor(props.app);
+    const expandedStyles = StyleSheet.create({
+        container: {
+            marginVertical: GUTTER,
+        }
+    });
+    
+    const styles = StyleSheet.create({
+        container: {
+            // marginHorizontal: GUTTER * 2,
+            marginVertical: GUTTER,
+        },
+        emojiText: {
+            fontSize: 40,
+        },
+        nameContainer: {
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginHorizontal: GUTTER
+        },
+        nameTextContainer: {
+            borderRadius: 12,
+            backgroundColor: dark,
+            paddingVertical: GUTTER * 0.5,
+            paddingHorizontal: GUTTER * 2,
+            // alignItems: 'space-between',
+        },
+        topicText: {
+            color: "#fff",
+            fontSize: 20
+        },
+        summaryContainer: {
+            // marginVertical: GUTTER * 2,
+            marginHorizontal: GUTTER * 1.5,
+        },
+        summaryText: {
+            color: 'white'
+        }
+    });
     return (
         // {props.expanded ? 
         <View style={styles.container}>
@@ -36,45 +77,7 @@ const Topic: React.FC<Props> = props => {
     );
 }
 
-const expandedStyles = StyleSheet.create({
-    container: {
-        marginVertical: GUTTER,
-    }
-});
 
-const styles = StyleSheet.create({
-    container: {
-        // marginHorizontal: GUTTER * 2,
-        marginVertical: GUTTER,
-    },
-    emojiText: {
-        fontSize: 40,
-    },
-    nameContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginHorizontal: GUTTER
-    },
-    nameTextContainer: {
-        borderRadius: 12,
-        backgroundColor: themes.gmail_dark,
-        paddingVertical: GUTTER * 0.5,
-        paddingHorizontal: GUTTER * 2,
-        // alignItems: 'space-between',
-    },
-    topicText: {
-        color: "#fff",
-        fontSize: 20
-    },
-    summaryContainer: {
-        // marginVertical: GUTTER * 2,
-        marginHorizontal: GUTTER * 1.5,
-    },
-    summaryText: {
-        color: 'white'
-    }
-});
 
 
 export default Topic;

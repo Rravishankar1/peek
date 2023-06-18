@@ -6,10 +6,11 @@ import {useFonts} from 'expo-font';
 import { GUTTER } from './theme/styles/Themes';
 import { peekRequest, peekRequest_app } from './protos/peek';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import HomeContainer from './containers/HomeContainer'
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: 'https://countries.trevorblades.com/graphql',
+  uri: 'http://localhost:4000/',
   cache: new InMemoryCache()
 });
 
@@ -24,17 +25,16 @@ const response = require("./fixtures/fake_data.json");
 // }
 
 export default function App() {  
-  console.log(response.gmail.topics[0].name);
-  // console.log(data)
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <SafeAreaView style={styles.container}>
+        <HomeContainer/>
+        {/* <SafeAreaView style={styles.container}>
             <View style={styles.titleContainer}>
               <Text style={styles.title}>Peeking Into</Text>
             </View>
             <AppContainer topics={response.gmail.topics}></AppContainer>
-        </SafeAreaView>
+        </SafeAreaView> */}
       </NavigationContainer>
     </ApolloProvider>
   );
