@@ -1,16 +1,4 @@
 from protos.responseBuilder import responseBuilder
-import os
-from dotenv import load_dotenv
-
-import tweepy
-
-load_dotenv()
-API_KEY = os.getenv('TWITTER_API_KEY')
-SECRET_KEY = os.getenv('TWITTER_SECRET_KEY')
-BEARER_TOKEN = os.getenv('TWITTER_BEARER_TOKEN')
-
-client = tweepy.Client(bearer_token=BEARER_TOKEN)
-
 
 def fetch(userID):
     print("Fetching Twitter data for user: " + str(userID))
